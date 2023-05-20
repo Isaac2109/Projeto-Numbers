@@ -17,9 +17,12 @@ color_active = pg.Color('dodgerblue2')
 color = color_inactive
 active = False
 text = ''
-
+dica_maior = False
+dica_menor = False
+acertou = False
 
 font_text = pg.font.SysFont('arial', 25)
+font_menor = pg.font.SysFont('arial', 20)
 running = True
 
 cor_background = 37, 247, 104
@@ -32,15 +35,12 @@ def sortear(lista):
 
 
 def check(numero_certo, palpite):
-    text_dica_menor = font_text.render("O número sorteado é menor do que seu palpite", 1, (0, 50, 150))
-    text_dica_maior = font_text.render("O número sorteado é maior do que seu palpite", 1, (0, 50, 150))
-    text_acertou = font_text.render("vc acertou", 1, (0, 50, 150))
     if numero_certo > int(palpite):
-        tela.blit(text_dica_maior, (60,260))
+        return "maior"
     if numero_certo < int(palpite):
-        tela.blit(text_dica_menor, (60,260))
+        return "menor"
     if numero_certo == int(palpite):
-        tela.blit(text_acertou, (60,260))
+        return "acertou"
     
 
 
@@ -57,6 +57,9 @@ text_inicial_7 = font_text.render("para começar pressione espaço", 1, (10,50,2
 # jogo rodando
 playing = False
 text_palpite = font_text.render("Digite seu palpite no campo abaixo", 1, (0, 50, 150))
+text_dica_menor = font_menor.render("O número sorteado é menor do que seu palpite", 1, (0, 50, 150))
+text_dica_maior = font_menor.render("O número sorteado é maior do que seu palpite", 1, (0, 50, 150))
+text_acertou = font_text.render("Você acertou o número sorteado", 1, (0, 50, 150))
 
 
 # tela restart
@@ -101,8 +104,17 @@ while running:
             if event.type == pg.KEYDOWN:
                 if active:
                     if event.key == pg.K_RETURN:
-                        while not event.key == pg.K_RETURN:
-                            check(numero_sorteado, text)
+                        if check(numero_sorteado, text) == "maior":
+                            dica_menor = False
+                            dica_maior = True
+                        if check(numero_sorteado, text) == "menor":
+                            dica_maior = False
+                            dica_menor = True
+                        if check(numero_sorteado, text) == "acertou":
+                            dica_maior = False
+                            dica_menor = False
+                            acertou = True
+
                         
                         text = ''
                     elif event.key == pg.K_BACKSPACE:
@@ -111,11 +123,18 @@ while running:
                         text += event.unicode
                    
         txt_surface = font.render(text, True, color)
-    
+
         width = max(200, txt_surface.get_width()+10)
         input_box.w = width
         tela.blit(txt_surface, (input_box.x+5, input_box.y+5))
         pg.draw.rect(tela, color, input_box, 2)
+
+        if dica_maior:
+            tela.blit(text_dica_maior, (30,260))
+        if dica_menor:
+            tela.blit(text_dica_menor, (30,260))
+        if acertou:
+            tela.blit(text_acertou, (60,260))
 
 
 
