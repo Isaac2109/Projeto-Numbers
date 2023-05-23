@@ -1,4 +1,5 @@
 import os
+from time import sleep
 import pygame as pg, random
 from pygame.locals import *
 
@@ -8,7 +9,6 @@ pg.init()
 tela = pg.display.set_mode((400,500))
 pg.display.set_caption("Numbers")
 
-dica = 0
 numero_sorteado = 0
 font = pg.font.Font(None, 32)
 input_box = pg.Rect(100,150,140,32)
@@ -61,6 +61,12 @@ text_dica_menor = font_menor.render("O número sorteado é menor do que seu palp
 text_dica_maior = font_menor.render("O número sorteado é maior do que seu palpite", 1, (0, 50, 150))
 text_acertou = font_text.render("Você acertou o número sorteado", 1, (0, 50, 150))
 
+temporizador = list(range(60))
+for sec in temporizador:
+    print(len(temporizador))
+    sleep(1)
+    del temporizador[:-1]
+    
 
 # tela restart
 tela_restart = False
@@ -78,7 +84,6 @@ while running:
         tela.blit(text_inicial_6, (15,200))
         tela.blit(text_inicial_7, (60,260))
         
-
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
