@@ -14,8 +14,8 @@ font = pg.font.Font(None, 32)
 input_box = pg.Rect(100,150,140,32)
 color_inactive = pg.Color('lightskyblue3')
 color_active = pg.Color('dodgerblue2')
-color = color_inactive
-active = False
+color = color_active
+active = True
 text = ''
 dica_maior = False
 dica_menor = False
@@ -31,7 +31,7 @@ def sortear(lista):
     global numero_sorteado
     sorteado = random.choice(lista)
     numero_sorteado = sorteado
-    print(numero_sorteado)
+    print(f"O número é:{numero_sorteado}")
 
 
 def check(numero_certo, palpite):
@@ -61,18 +61,18 @@ text_dica_menor = font_menor.render("O número sorteado é menor do que seu palp
 text_dica_maior = font_menor.render("O número sorteado é maior do que seu palpite", 1, (0, 50, 150))
 text_acertou = font_text.render("Você acertou o número sorteado", 1, (0, 50, 150))
 
-temporizador = list(range(60))
-for sec in temporizador:
-    print(len(temporizador))
-    sleep(1)
-    del temporizador[:-1]
-    
+contando = False
+temporizador = list(range(30))
+def contador():
+        sleep(1)
+        print(len(temporizador))
+        temporizador.pop(-1)
 
 # tela restart
 tela_restart = False
 
 while running:
-    clock.tick(60)
+    clock.tick(140)
     tela.fill(cor_background)
     # tela.blit(imagem_number, (0,0))
     if tela_inicial:
@@ -92,7 +92,9 @@ while running:
                     tela_inicial = False
                     playing = True
                     sortear(range(100))
-                    
+
+    
+          
         
 
     if playing:
@@ -110,16 +112,23 @@ while running:
                 if active:
                     if event.key == pg.K_RETURN:
                         if check(numero_sorteado, text) == "maior":
+                            acertou = False
                             dica_menor = False
                             dica_maior = True
                         if check(numero_sorteado, text) == "menor":
+                            acertou = False
                             dica_maior = False
                             dica_menor = True
                         if check(numero_sorteado, text) == "acertou":
                             dica_maior = False
                             dica_menor = False
                             acertou = True
-
+                            sortear(range(100))
+                            temporizador.insert(len(temporizador),len(temporizador))
+                            temporizador.insert(len(temporizador),len(temporizador))
+                            temporizador.insert(len(temporizador),len(temporizador))
+                            temporizador.insert(len(temporizador),len(temporizador))
+                            temporizador.insert(len(temporizador),len(temporizador))
                         
                         text = ''
                     elif event.key == pg.K_BACKSPACE:
@@ -140,6 +149,7 @@ while running:
             tela.blit(text_dica_menor, (30,260))
         if acertou:
             tela.blit(text_acertou, (60,260))
+        contador()
 
 
 
