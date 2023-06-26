@@ -1,4 +1,3 @@
-import os
 from time import sleep
 import pygame as pg, random
 from pygame.locals import *
@@ -21,7 +20,7 @@ dica_maior = False
 dica_menor = False
 acertou = False
 
-font_text = pg.font.SysFont('arial', 25)
+font_text = pg.font.SysFont('arial', 20)
 font_menor = pg.font.SysFont('arial', 20)
 running = True
 
@@ -61,12 +60,12 @@ text_dica_menor = font_menor.render("O número sorteado é menor do que seu palp
 text_dica_maior = font_menor.render("O número sorteado é maior do que seu palpite", 1, (0, 50, 150))
 text_acertou = font_text.render("Você acertou o número sorteado", 1, (0, 50, 150))
 
-contando = False
-temporizador = list(range(30))
-def contador():
-        sleep(1)
-        print(len(temporizador))
-        temporizador.pop(-1)
+# contando = False
+# temporizador = list(range(30))
+# def contador():
+#         sleep(1)
+#         print(len(temporizador))
+#         temporizador.pop(-1)
 
 # tela restart
 tela_restart = False
@@ -124,11 +123,11 @@ while running:
                             dica_menor = False
                             acertou = True
                             sortear(range(100))
-                            temporizador.insert(len(temporizador),len(temporizador))
-                            temporizador.insert(len(temporizador),len(temporizador))
-                            temporizador.insert(len(temporizador),len(temporizador))
-                            temporizador.insert(len(temporizador),len(temporizador))
-                            temporizador.insert(len(temporizador),len(temporizador))
+                            # temporizador.insert(len(temporizador),len(temporizador))
+                            # temporizador.insert(len(temporizador),len(temporizador))
+                            # temporizador.insert(len(temporizador),len(temporizador))
+                            # temporizador.insert(len(temporizador),len(temporizador))
+                            # temporizador.insert(len(temporizador),len(temporizador))
                         
                         text = ''
                     elif event.key == pg.K_BACKSPACE:
@@ -149,7 +148,7 @@ while running:
             tela.blit(text_dica_menor, (30,260))
         if acertou:
             tela.blit(text_acertou, (60,260))
-        contador()
+        # contador()
 
 
 
